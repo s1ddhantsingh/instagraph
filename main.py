@@ -24,6 +24,8 @@ if neo4j_username and neo4j_password and neo4j_url:
         neo4j_url, auth=(neo4j_username, neo4j_password))
 
 # Function to scrape text from a website
+
+
 def scrape_text_from_url(url):
     response = requests.get(url)
     if response.status_code != 200:
@@ -73,7 +75,8 @@ def get_response_data():
                                     "id": {"type": "string"},
                                     "label": {"type": "string"},
                                     "type": {"type": "string"},
-                                    "color": {"type": "string"},  # Added color property
+                                    # Added color property
+                                    "color": {"type": "string"},
                                     "properties": {
                                         "type": "object",
                                         "description": "Additional attributes for the node",
@@ -96,7 +99,8 @@ def get_response_data():
                                     "to": {"type": "string"},
                                     "relationship": {"type": "string"},
                                     "direction": {"type": "string"},
-                                    "color": {"type": "string"},  # Added color property
+                                    # Added color property
+                                    "color": {"type": "string"},
                                     "properties": {
                                         "type": "object",
                                         "description": "Additional attributes for the edge",
@@ -126,7 +130,7 @@ def get_response_data():
         UNWIND $nodes AS node
         MERGE (n:Node {id:toLower(node.id)})
         SET n.type = node.type, n.label = node.label, n.color = node.color""",
-            {"nodes": json.loads(response_data)['nodes']})
+                                   {"nodes": json.loads(response_data)['nodes']})
         # Import relationships
         neo4j_driver.execute_query("""
         UNWIND $rels AS rel
